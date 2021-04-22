@@ -28,14 +28,67 @@ toc::[]
 
 == Introduction
 
+The https://jmeter.apache.org/[Apache JMeter™] application is open source software, a 100% pure Java application designed to load test functional behavior and measure performance. It was originally designed for testing Web Applications but has since expanded to other test functions.
 
-== Creating the container image
+== JMeter on your laptop: Building the container image
+
+In order to perform some testing locally, you may want to build the JMeter image directly on your laptop. 
+
+[source, bash]
+----
+podman build -t localhost/jmeter:latest ./container-image
+----
+
+== JMeter on your laptop: Running the image
 
 
-== Deploying the image on OCP
+[source, bash]
+----
+podman run --rm -it --name jmeter localhost/jmeter:latest
+----
 
 
-== Obtaining the report from the pod
+
+
+== JMeter on Openshift: Building the container image
+
+
+
+
+
+
+== Building the container image on Openshift
+If your have a disconnected Openshift installation, you will also require to build your application locally.
+
+[source, bash]
+----
+JMETER_NAMESPACE="jmeter"
+oc new-project $JMETER_NAMESPACE --display-name="JMeter Testing" --description="This namespace contains resources to deploy JMeter"
+----
+
+
+== JMeter on Openshift: Deploying the image
+
+
+First, create a ConfigMap that will store your application configuration:
+[source, bash]
+----
+oc create configmap ${app_name}-config \
+--from-file=application.properties=src/main/resources/application-k8s.properties \
+--from-file=logback-spring.xml=src/main/resources/logback-spring-k8s.xml -n $namespace
+----
+
+[source, bash]
+----
+
+----
+
+== JMeter on Openshift: Obtaining JMeter reports
+
+[source, bash]
+----
+
+----
 
 
 
