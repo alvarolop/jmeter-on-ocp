@@ -1,0 +1,42 @@
+= Apache JMeter on Openshift
+Álvaro López Medina <alopezme@redhat.com>
+v1.0, 2021-04
+// Create TOC wherever needed
+:toc: macro
+:sectanchors:
+:sectnumlevels: 2
+:sectnums: 
+:source-highlighter: pygments
+:imagesdir: images
+// Start: Enable admonition icons
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+ifndef::env-github[]
+:icons: font
+endif::[]
+// End: Enable admonition icons
+
+This repository helps you to deploy the latest version of JMeter on Openshift taking advantage of RH UBI images and Openshift resources.
+
+// Create the Table of contents here
+toc::[]
+
+== Introduction
+
+
+== Creating the container image
+
+
+== Deploying the image on OCP
+
+
+== Obtaining the report from the pod
+
+
+
+== Useful links
