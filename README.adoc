@@ -53,11 +53,6 @@ podman run --rm -it --name jmeter localhost/jmeter:latest
 == JMeter on Openshift: Building the container image
 
 
-
-
-
-
-== Building the container image on Openshift
 If your have a disconnected Openshift installation, you will also require to build your application locally.
 
 [source, bash]
