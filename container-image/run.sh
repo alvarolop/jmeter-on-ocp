@@ -20,6 +20,7 @@ then
     echo "START Running Jmeter on `date`"
     # -n(--nongui),-D(--systemproperty),-t(--testfile),-l(--logfile)
     # -p(--propfile),-e(--reportatendofloadtests),-o(--reportoutputfolder)
+    export TEST_PLAN="${TEST_NAME:-example}"
     jmeter \
     -n \
     -p "$JMETER_BASE/tests/config.properties" \
