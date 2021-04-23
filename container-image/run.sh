@@ -15,7 +15,7 @@ echo "JVM_ARGS=${JVM_ARGS}"
 echo "jmeter args=$@"
 
 # Ejecute the JMeter command.
-if [ “$RUN_JMETER != false ]
+if [ $RUN_JMETER != false ]
 then
     echo "START Running Jmeter on `date`"
     # -n(--nongui),-D(--systemproperty),-t(--testfile),-l(--logfile)
@@ -32,3 +32,9 @@ then
 else
     echo "Skipping the execution of jmeter, run it manually..."
 fi
+
+# Wait to download results from the test
+while true;
+do
+    sleep 30;
+done;
