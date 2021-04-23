@@ -15,14 +15,20 @@ echo "JVM_ARGS=${JVM_ARGS}"
 echo "jmeter args=$@"
 
 # Ejecute the JMeter command.
-# Keep entrypoint simple: we must pass the standard JMeter arguments
-#echo "START Running Jmeter on `date`"
-#$JMETER_BIN/jmeter \
-#    -n \
-#    -D "java.rmi.server.hostname=${IP}" \
-#    -D "client.rmi.localport=${RMI_PORT}" \
-#    -t "/load_tests/${TEST_DIR}/${TEST_PLAN}.jmx" \
-#    -l "/load_tests/${TEST_DIR}/${TEST_PLAN}.jtl" \
-#    -R $REMOTE_HOSTS
-# exec tail -f jmeter.log
-echo "END Running Jmeter on `date`"
+if [ “$RUN_JMETER != false ]
+then
+    echo "START Running Jmeter on `date`"
+    # -n(--nongui),-D(--systemproperty),-t(--testfile),-l(--logfile)
+    # -p(--propfile),-e(--reportatendofloadtests),-o(--reportoutputfolder)
+    jmeter \
+    -n \
+    -p "$JMETER_BASE/tests/config.properties" \
+    -t "$JMETER_BASE/tests/${TEST_PLAN}.jmx" \
+    -l "$JMETER_BASE/results/${TEST_PLAN}.jtl" \
+    -e \
+    -o "$JMETER_BASE/results/${TEST_PLAN}-report"
+    exec tail -f jmeter.log
+    echo "END Running Jmeter on `date`"
+else
+    echo "Skipping the execution of jmeter, run it manually..."
+fi
