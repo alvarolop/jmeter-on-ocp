@@ -92,9 +92,13 @@ oc process -f templates/jmeter-dc.yaml -p APP_NAMESPACE=$APP_NAMESPACE | oc appl
 JMETER_POD=$(oc get pods -l app=jmeter -n $APP_NAMESPACE --template='{{(index .items 0).metadata.name}}')
 NOW=$(date +"%Y-%m-%d_%H-%M")
 mkdir ./results/$NOW-$TEST
-oc rsync $JMETER_POD:/opt/jmeter/results/$TEST/* ./results/$NOW-$TEST
+oc rsync $JMETER_POD:/opt/jmeter/results/$TEST-report/* ./results/$NOW-$TEST
 ----
 
 
 
 == Useful links
+
+
+* Official https://jmeter.apache.org/usermanual/get-started.html[Apache JMeter documentation].
+* Medium: https://medium.com/chaya-thilakumara/start-learning-jmeter-with-sample-test-cases-2dc2a4963b62[Start Learning JMeter With Sample Test Cases].
