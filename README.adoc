@@ -102,3 +102,20 @@ oc rsync $JMETER_POD:/opt/jmeter/results/$TEST-report/* ./results/$NOW-$TEST
 
 * Official https://jmeter.apache.org/usermanual/get-started.html[Apache JMeter documentation].
 * Medium: https://medium.com/chaya-thilakumara/start-learning-jmeter-with-sample-test-cases-2dc2a4963b62[Start Learning JMeter With Sample Test Cases].
+
+
+
+
+
+
+
+
+== Annex: Running jmeter in your laptop
+
+[source, bash]
+----
+JMETER_BASE=$(pwd)
+TEST_PLAN=test-01
+NOW=$(date +"%Y-%m-%d_%H-%M")
+jmeter -n -p "$JMETER_BASE/tests/${TEST_PLAN}/config.properties" -t "$JMETER_BASE/tests/${TEST_PLAN}/jmeter-test-plan.jmx" -l "$JMETER_BASE/results/${NOW}-${TEST_PLAN}.jtl" -e -o "$JMETER_BASE/results/${NOW}-${TEST_PLAN}-report"
+----
