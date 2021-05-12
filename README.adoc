@@ -90,9 +90,9 @@ oc process -f templates/jmeter-dc.yaml -p APP_NAMESPACE=$APP_NAMESPACE | oc appl
 ----
 # Get JMeter pod name
 JMETER_POD=$(oc get pods -l app=jmeter -n $APP_NAMESPACE --template='{{(index .items 0).metadata.name}}')
-NOW=$(date +"%Y-%m-%d_%H-%M")
+NOW=$(date +"%Y-%m-%d_%H-%M-%S")
 mkdir ./results/$NOW-$TEST
-oc rsync $JMETER_POD:/opt/jmeter/results/$TEST-report/* ./results/$NOW-$TEST
+oc rsync $JMETER_POD:/opt/jmeter/results/$TEST-report/ ./results/$NOW-$TEST
 ----
 
 
@@ -115,7 +115,6 @@ oc rsync $JMETER_POD:/opt/jmeter/results/$TEST-report/* ./results/$NOW-$TEST
 [source, bash]
 ----
 JMETER_BASE=$(pwd)
-TEST_PLAN=test-01
-NOW=$(date +"%Y-%m-%d_%H-%M")
-jmeter -n -p "$JMETER_BASE/tests/${TEST_PLAN}/config.properties" -t "$JMETER_BASE/tests/${TEST_PLAN}/jmeter-test-plan.jmx" -l "$JMETER_BASE/results/${NOW}-${TEST_PLAN}.jtl" -e -o "$JMETER_BASE/results/${NOW}-${TEST_PLAN}-report"
+TEST_PLAN=test-03
+NOW=$(date +"%Y-%m-%d_%H-%M-%S"); jmeter -n -p "$JMETER_BASE/tests/${TEST_PLAN}/config.properties" -t "$JMETER_BASE/tests/${TEST_PLAN}/jmeter-test-plan.jmx" -l "$JMETER_BASE/results/${NOW}-${TEST_PLAN}.jtl" -e -o "$JMETER_BASE/results/${NOW}-${TEST_PLAN}-report"
 ----
