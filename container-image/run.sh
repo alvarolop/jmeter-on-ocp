@@ -8,7 +8,7 @@ set -e
 # Initial Java heap size for the Eden generation
 # xmn=$(($MEMORY_LIMIT/1024/1024))
 # Maximum heap size
-xmx=$(($MEMORY_LIMIT/1024/1024))
+xmx=$(($MEMORY_LIMIT/1024/1024-1024))
 # Initial Java heap size
 xms=$(($MEMORY_LIMIT/1024/1024/2))
 
