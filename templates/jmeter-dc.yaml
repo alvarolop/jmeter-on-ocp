@@ -53,6 +53,16 @@ objects:
                 value: "true"
               - name: TEST_NAME
                 value: ${TEST_NAME}
+              - name: MEMORY_REQUEST
+                valueFrom:
+                  resourceFieldRef:
+                    containerName: ${APPLICATION_NAME}
+                    resource: requests.memory
+              - name: MEMORY_LIMIT
+                valueFrom:
+                  resourceFieldRef:
+                    containerName: ${APPLICATION_NAME}
+                    resource: limits.memory
             # ports:
             #   - name: http
             #     containerPort: 8080

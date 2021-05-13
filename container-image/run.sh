@@ -5,11 +5,15 @@
 # This script expects the standard JMeter command parameters.
 #
 set -e
-freeMem=`awk '/MemFree/ { print int($2/1024) }' /proc/meminfo`
-s=$(($freeMem/10*8))
-x=$(($freeMem/10*8))
-n=$(($freeMem/10*2))
-export JVM_ARGS="-Xmn${n}m -Xms${s}m -Xmx${x}m"
+# Initial Java heap size for the Eden generation
+# xmn=$(($MEMORY_LIMIT/1024/1024))
+# Maximum heap size
+xmx=$(($MEMORY_LIMIT/1024/1024))
+# Initial Java heap size
+xms=$(($MEMORY_LIMIT/1024/1024/2))
+
+# export JVM_ARGS="-Xmn${xmn}m -Xms${xms}m -Xmx${xmx}m"
+export JVM_ARGS="-Xms${xms}m -Xmx${xmx}m"
 
 echo "JVM_ARGS=${JVM_ARGS}"
 echo "jmeter args=$@"
