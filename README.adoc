@@ -117,5 +117,5 @@ oc rsync $JMETER_POD:/opt/jmeter/results/$TEST-report/ ./results/$NOW-$TEST
 ----
 JMETER_BASE=$(pwd)
 TEST_PLAN=test-03
-NOW=$(date +"%Y-%m-%d_%H-%M-%S"); jmeter -n -p "$JMETER_BASE/tests/${TEST_PLAN}/config.properties" -t "$JMETER_BASE/tests/${TEST_PLAN}/jmeter-test-plan.jmx" -l "$JMETER_BASE/results/${NOW}-${TEST_PLAN}.jtl" -e -o "$JMETER_BASE/results/${NOW}-${TEST_PLAN}-report"
+NOW=$(date +"%Y-%m-%d_%H-%M-%S"); jmeter -n -p "$JMETER_BASE/tests/${TEST_PLAN}/config.properties" -t "$JMETER_BASE/tests/${TEST_PLAN}/jmeter-test-plan.jmx" -l "$JMETER_BASE/results/${NOW}-${TEST_PLAN}.jtl" -e -o "$JMETER_BASE/results/${NOW}-${TEST_PLAN}-report"; cp -r $JMETER_BASE/tests/${TEST_PLAN}/ $JMETER_BASE/results/${NOW}-${TEST_PLAN}-report
 ----
