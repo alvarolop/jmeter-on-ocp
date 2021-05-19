@@ -35,29 +35,29 @@ fi
 
 
 # Create JMeter configuration on ConfigMap
-# echo -e "\n[1/3]Creating JMeter configuration on ConfigMap"
-# oc create configmap ${JMETER_APP_NAME}-config -n $JMETER_NAMESPACE \
-# --from-file=${JMETER_TEST}.jmx=tests/${JMETER_TEST}/jmeter-test-plan.jmx \
-# --from-file=config.properties=tests/${JMETER_TEST}/config-k8s.properties
+echo -e "\n[1/3]Creating JMeter configuration on ConfigMap"
+oc create configmap ${JMETER_APP_NAME}-config -n $JMETER_NAMESPACE \
+--from-file=${JMETER_TEST}.jmx=tests/${JMETER_TEST}/jmeter-test-plan.jmx \
+--from-file=config.properties=tests/${JMETER_TEST}/config-k8s.properties
 
 
-# # Create RHDG Client configmap
-# echo -e "\n[2/3]Building the JMeter container image"
-# oc process -f templates/jmeter-bc.yaml \
-#     -p APP_NAMESPACE=$JMETER_NAMESPACE \
-#     -p APPLICATION_NAME=$JMETER_APP_NAME \
-#     -p GIT_REPOSITORY=$JMETER_GIT_REPO | oc apply -f -
+# Create RHDG Client configmap
+echo -e "\n[2/3]Building the JMeter container image"
+oc process -f templates/jmeter-bc.yaml \
+    -p APP_NAMESPACE=$JMETER_NAMESPACE \
+    -p APPLICATION_NAME=$JMETER_APP_NAME \
+    -p GIT_REPOSITORY=$JMETER_GIT_REPO | oc apply -f -
 
-# # Deploy the RHDG client
-# echo -e "\n[3/3]Deploying the JMeter client"
-# oc process -f templates/jmeter-dc.yaml \
-#     -p APP_NAMESPACE=$JMETER_NAMESPACE \
-#     -p APPLICATION_NAME=$JMETER_APP_NAME \
-#     -p MEMORY_REQUEST=$MEMORY_REQUEST \
-#     -p MEMORY_LIMIT=$MEMORY_LIMIT \
-#     -p CPU_REQUEST=$CPU_REQUEST \
-#     -p CPU_LIMIT=$CPU_LIMIT \
-#     -p TEST_NAME=$JMETER_TEST | oc apply -f -
+# Deploy the RHDG client
+echo -e "\n[3/3]Deploying the JMeter client"
+oc process -f templates/jmeter-dc.yaml \
+    -p APP_NAMESPACE=$JMETER_NAMESPACE \
+    -p APPLICATION_NAME=$JMETER_APP_NAME \
+    -p MEMORY_REQUEST=$MEMORY_REQUEST \
+    -p MEMORY_LIMIT=$MEMORY_LIMIT \
+    -p CPU_REQUEST=$CPU_REQUEST \
+    -p CPU_LIMIT=$CPU_LIMIT \
+    -p TEST_NAME=$JMETER_TEST | oc apply -f -
 
 sleep 5
 # Wait for DeploymentConfig
