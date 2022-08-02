@@ -76,4 +76,4 @@ mkdir -p ./results/ocp-$NOW-$JMETER_TEST-report
 echo -e "\JMeter pod information:"
 echo -e " * POD: $JMETER_POD"
 echo -e " * LOGS: oc logs -f $JMETER_POD"
-echo -e " * REPORT: oc rsync $JMETER_POD:/opt/jmeter/results/$JMETER_TEST-report/ ./results/ocp-$NOW-$JMETER_TEST-report"
+echo -e " * REPORT: oc rsync $JMETER_POD:/opt/jmeter/results/$JMETER_TEST.zip ./results/ocp-$NOW-$JMETER_TEST-report"

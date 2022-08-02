@@ -36,6 +36,8 @@ then
     -o "$JMETER_BASE/results/${TEST_PLAN}-report"
     exec tail -f jmeter.log
     echo "END Running Jmeter on `date`"
+    echo "Zipping report"
+    zip -r $JMETER_BASE/results/${TEST_PLAN}.zip $JMETER_BASE/results/${TEST_PLAN}-report
 else
     echo "Skipping the execution of jmeter, run it manually..."
 fi
