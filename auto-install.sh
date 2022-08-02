@@ -38,7 +38,7 @@ oc project $JMETER_NAMESPACE # To avoid issues with deleted projects
 
 # Create JMeter configuration on ConfigMap
 echo -e "\n[1/4]Creating JMeter configuration on ConfigMap"
-oc delete configmap ${JMETER_APP_NAME}-config -n $JMETER_NAMESPACE
+oc delete configmap ${JMETER_APP_NAME}-config -n $JMETER_NAMESPACE || true
 oc create configmap ${JMETER_APP_NAME}-config -n $JMETER_NAMESPACE \
 --from-file=${JMETER_TEST}.jmx=tests/${JMETER_TEST}/test.jmx \
 --from-file=config.properties=tests/${JMETER_TEST}/config-k8s.properties
