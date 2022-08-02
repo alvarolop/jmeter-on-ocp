@@ -1,7 +1,7 @@
 # Inspired from https://github.com/fgiloux/auto-perf-test/blob/master/jmeter/container/Dockerfile
 FROM registry.access.redhat.com/ubi8/openjdk-11
 MAINTAINER Álvaro López<alopezme@redhat.com>
-ARG JMETER_VERSION="5.4.1"
+ENV JMETER_VERSION "5.4.1"
 
 LABEL jmeter.version=${JMETER_VERSION}
 
@@ -35,7 +35,7 @@ COPY run.sh $JMETER_BASE/run.sh
 
 USER 0
 
-RUN chgrp -R 0 $JMETER_BASE \ 
+RUN chgrp -R 0 $JMETER_BASE \
     && chmod -R g+rw $JMETER_BASE \
     && chmod  gu+x $JMETER_BASE/run.sh
 
