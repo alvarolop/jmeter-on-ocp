@@ -1,7 +1,7 @@
 # Inspired from https://github.com/fgiloux/auto-perf-test/blob/master/jmeter/container/Dockerfile
 FROM registry.access.redhat.com/ubi8/openjdk-11
 MAINTAINER Álvaro López<alopezme@redhat.com>
-ARG JMETER_VERSION="5.4.1"
+ENV JMETER_VERSION "5.5"
 
 LABEL jmeter.version=${JMETER_VERSION}
 
@@ -15,9 +15,9 @@ ENV PATH $JMETER_HOME/bin:$PATH
 RUN mkdir -p $JMETER_BASE/{tests,results}
 
 # Option 1: Download latest jmeter binaries from the Apache archive:
-RUN curl -SL https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz \
-   | tar -xzC $JMETER_BASE \
-   && rm -rf apache-jmeter-${JMETER_VERSION}.tgz
+RUN curl -SL https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.zip -o apache-jmeter-${JMETER_VERSION}.zip
+RUN cd $JMETER_BASE ; unzip ~/apache-jmeter-${JMETER_VERSION}.zip
+RUN rm -rf apache-jmeter-${JMETER_VERSION}.zip
 
 # Option 2: If you don't have internet access from the build machine use COPY instead of curl. In this case, you will need the binaries in the same folder as this Dockerfile.
 # COPY apache-jmeter-${JMETER_VERSION}.tgz $JMETER_BASE
@@ -35,7 +35,7 @@ COPY run.sh $JMETER_BASE/run.sh
 
 USER 0
 
-RUN chgrp -R 0 $JMETER_BASE \ 
+RUN chgrp -R 0 $JMETER_BASE \
     && chmod -R g+rw $JMETER_BASE \
     && chmod  gu+x $JMETER_BASE/run.sh
 
