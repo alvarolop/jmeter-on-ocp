@@ -10,12 +10,12 @@ set -e
 # Thread size
 xss="2048"
 # Maximum heap size
-xmx=$(($MEMORY_LIMIT/1024/1024-2048))
+xmx=$(($MEMORY_LIMIT/1024/1024/2))
 # Initial Java heap size
-xms=$(($MEMORY_LIMIT/1024/1024/2))
+xms=$xmx
 
 # export JVM_ARGS="-Xmn${xmn}m -Xms${xms}m -Xmx${xmx}m"
-export JVM_ARGS="-Xms${xms}m -Xmx${xmx}m -Xss${xss}k"
+export JVM_ARGS="-Xms${xms}m -Xmx${xmx}m -Xss${xss}m"
 
 echo "JVM_ARGS=${JVM_ARGS}"
 echo "jmeter args=$@"
