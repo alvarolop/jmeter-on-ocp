@@ -8,7 +8,7 @@ set -e
 # Initial Java heap size for the Eden generation
 # xmn=$(($MEMORY_LIMIT/1024/1024))
 # Thread size
-xss="512"
+xss="2048"
 # Maximum heap size
 xmx=$(($MEMORY_LIMIT/1024/1024-2048))
 # Initial Java heap size
@@ -29,7 +29,7 @@ then
     export TEST_PLAN="${TEST_NAME:-example}"
     jmeter \
     -n \
-    -p "$JMETER_BASE/tests/config.properties" \
+    -q "$JMETER_BASE/tests/config.properties" \
     -t "$JMETER_BASE/tests/${TEST_PLAN}.jmx" \
     -l "$JMETER_BASE/results/${TEST_PLAN}.jtl" \
     -e \
