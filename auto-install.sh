@@ -37,7 +37,7 @@ oc create ns $JMETER_NAMESPACE || true
 oc project $JMETER_NAMESPACE # To avoid issues with deleted projects
 
 # Create JMeter configuration on ConfigMap
-echo -e "\n[1/4]Creating JMeter configuration on ConfigMap"
+echo -e "\n[1/3]Creating JMeter configuration on ConfigMap"
 oc delete configmap ${JMETER_APP_NAME}-config -n $JMETER_NAMESPACE || true
 oc create configmap ${JMETER_APP_NAME}-config -n $JMETER_NAMESPACE \
 --from-file=${JMETER_TEST}.jmx=tests/${JMETER_TEST}/test.jmx \
@@ -45,16 +45,16 @@ oc create configmap ${JMETER_APP_NAME}-config -n $JMETER_NAMESPACE \
 oc get cm
 # Create RHDG Client configmap
 
-echo -e "\n[2/4]..Clean Old Build Process"
-oc delete buildconfig
-echo -e "\n[3/4]Building the JMeter container image"
+
+
+echo -e "\n[2/3]Building the JMeter container image"
 oc process -f templates/jmeter-bc.yaml \
     -p APP_NAMESPACE=$JMETER_NAMESPACE \
     -p APPLICATION_NAME=$JMETER_APP_NAME \
     -p GIT_REPOSITORY=$JMETER_GIT_REPO | oc apply -f -
 
 # Deploy the RHDG client
-echo -e "\n[4/4]Deploying the JMeter client"
+echo -e "\n[3/3]Deploying the JMeter client"
 oc process -f templates/jmeter-dc.yaml \
     -p APP_NAMESPACE=$JMETER_NAMESPACE \
     -p APPLICATION_NAME=$JMETER_APP_NAME \
@@ -67,7 +67,7 @@ oc process -f templates/jmeter-dc.yaml \
 sleep 5
 # Wait for DeploymentConfig
 echo -n -e "\nWaiting for pods ready..."
-while [[ $(oc get pods -l app=$JMETER_APP_NAME -n $JMETER_NAMESPACE -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do oc get po && sleep 1; done; echo -n -e "  [OK]\n"
+while [[ $(oc get pods -l app=$JMETER_APP_NAME -n $JMETER_NAMESPACE -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do oc get po && sleep 5;echo ; done; echo -n -e "  [OK]\n"
 
 JMETER_POD=$(oc get pods -l app=$JMETER_APP_NAME -n $JMETER_NAMESPACE --template='{{(index .items 0).metadata.name}}')
 NOW=$(date +"%Y-%m-%d_%H-%M-%S")

@@ -8,14 +8,14 @@ set -e
 # Initial Java heap size for the Eden generation
 # xmn=$(($MEMORY_LIMIT/1024/1024))
 # Thread size
-xss="2048"
+#xss="2048"
 # Maximum heap size
 xmx=$(($MEMORY_LIMIT/1024/1024/2))
 # Initial Java heap size
 xms=$xmx
 
 # export JVM_ARGS="-Xmn${xmn}m -Xms${xms}m -Xmx${xmx}m"
-export JVM_ARGS="-Xms${xms}m -Xmx${xmx}m -Xss${xss}m"
+export JVM_ARGS="-Xms${xms}m -Xmx${xmx}m"
 
 echo "JVM_ARGS=${JVM_ARGS}"
 echo "jmeter args=$@"
