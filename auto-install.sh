@@ -5,7 +5,7 @@ set -e
 # Set your environment variables here
 JMETER_NAMESPACE=jmeter
 JMETER_APP_NAME=jmeter
-JMETER_GIT_REPO=https://github.com/chrisphillips-cminion/jmeter-on-ocp.git
+JMETER_GIT_REPO=https://github.com/alvarolop/jmeter-on-ocp.git
 JMETER_TEST="example"
 MEMORY_REQUEST="4096"
 MEMORY_LIMIT="6144"
@@ -67,7 +67,7 @@ oc process -f templates/jmeter-dc.yaml \
 sleep 5
 # Wait for DeploymentConfig
 echo -n -e "\nWaiting for pods ready..."
-while [[ $(oc get pods -l app=$JMETER_APP_NAME -n $JMETER_NAMESPACE -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do oc get po && sleep 5;echo ; done; echo -n -e "  [OK]\n"
+while [[ $(oc get pods -l app=$JMETER_APP_NAME -n $JMETER_NAMESPACE -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do echo -n "." && sleep 1; done; echo -n -e "  [OK]\n"
 
 JMETER_POD=$(oc get pods -l app=$JMETER_APP_NAME -n $JMETER_NAMESPACE --template='{{(index .items 0).metadata.name}}')
 NOW=$(date +"%Y-%m-%d_%H-%M-%S")

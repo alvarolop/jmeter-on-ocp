@@ -1,3 +1,5 @@
 container-image/apache-*
 results
+jmeter-output
+jmeter.log
 tests/test-*
