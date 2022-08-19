@@ -8,14 +8,14 @@ set -e
 # Initial Java heap size for the Eden generation
 # xmn=$(($MEMORY_LIMIT/1024/1024))
 # Thread size
-xss="512"
+#xss="2048"
 # Maximum heap size
-xmx=$(($MEMORY_LIMIT/1024/1024-2048))
+xmx=$(($MEMORY_LIMIT/1024/1024/2))
 # Initial Java heap size
-xms=$(($MEMORY_LIMIT/1024/1024/2))
+xms=$xmx
 
 # export JVM_ARGS="-Xmn${xmn}m -Xms${xms}m -Xmx${xmx}m"
-export JVM_ARGS="-Xms${xms}m -Xmx${xmx}m -Xss${xss}k"
+export JVM_ARGS="-Xms${xms}m -Xmx${xmx}m"
 
 echo "JVM_ARGS=${JVM_ARGS}"
 echo "jmeter args=$@"
@@ -29,13 +29,15 @@ then
     export TEST_PLAN="${TEST_NAME:-example}"
     jmeter \
     -n \
-    -p "$JMETER_BASE/tests/config.properties" \
+    -q "$JMETER_BASE/tests/config.properties" \
     -t "$JMETER_BASE/tests/${TEST_PLAN}.jmx" \
     -l "$JMETER_BASE/results/${TEST_PLAN}.jtl" \
     -e \
     -o "$JMETER_BASE/results/${TEST_PLAN}-report"
     exec tail -f jmeter.log
     echo "END Running Jmeter on `date`"
+    echo "Zipping report"
+    zip -r $JMETER_BASE/results/${TEST_PLAN}.zip $JMETER_BASE/results/${TEST_PLAN}-report
 else
     echo "Skipping the execution of jmeter, run it manually..."
 fi
